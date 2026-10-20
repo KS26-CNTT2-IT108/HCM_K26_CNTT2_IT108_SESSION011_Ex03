@@ -1,0 +1,32 @@
+SESSION11
+Bài 3 : Chuẩn hóa quy trình tra cứu dữ liệu kho hàng
+
+Tên lớp: HCM K26 CNTT2
+Môn học: Nhập môn công nghệ thông tin
+Họ và tên: LƯƠNG THANH THƯ
+
+Phần 1: Phân tích 
+
+Tham số					Trong bài này						Lưu ý
+lookup_value				A2 (mã linh kiện, VD LK01)				Không có $ để kéo xuống thành A3, A4...
+table_array				Danh_Muc!$A$2:$C$101					Cột đầu tiên phải là cột Mã, phải khóa bằng $ (F4)
+col_index_num				2 (Tên linh kiện), 3 (Đơn giá)				Đếm từ cột đầu của vùng tra
+range_lookup				FALSE							Tìm khớp chính xác
+
+Phần 2: Triển khai.
+
+Ô B2 (Tên linh kiện):
+
+=IFERROR(VLOOKUP(TRIM(A2),Danh_Muc!$A$2:$C$101,2,FALSE),"Không tìm thấy mã")
+
+Ô C2 (Đơn giá):
+
+=IFERROR(VLOOKUP(TRIM(A2),Danh_Muc!$A$2:$C$101,3,FALSE),"Không tìm thấy mã")
+
+Sau đó kéo xuống dòng 101.
+
+
+Giải thích 2 bẫy
++ Bẫy 1 (quên $): kéo xuống làm vùng tra trượt (A3:C102, A4:C103...), mã LK01 rơi khỏi vùng nên ra #N/A hàng loạt. Khóa bằng $A$2:$C$101 để cố định.
++ Bẫy 2 (khoảng trắng thừa): "LK01 " khác "LK01" nên không khớp. Dùng TRIM() để xóa khoảng trắng.
++ IFERROR: thay #N/A bằng thông báo thân thiện.
